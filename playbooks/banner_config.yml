@@ -1,0 +1,10 @@
+- name: Configure MOTD banner on router and switch
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: Set MOTD banner
+      cisco.ios.ios_config:
+        lines:
+          - banner motd ^UNAUTHORISED ACCESS ONLY^
+
