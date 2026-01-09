@@ -1,0 +1,32 @@
+- name: Configure SSH on Cisco devices
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: Set domain name
+      cisco.ios.ios_config:
+        lines:
+          - ip domain-name cisco.local
+
+    - name: Enable SSH version 2
+      cisco.ios.ios_config:
+        lines:
+          - ip ssh version 2
+
+    - name: Create local admin user
+      cisco.ios.ios_config:
+        lines:
+          - username admin privilege 15 secret cisco123
+
+    - name: Generate RSA key
+      cisco.ios.ios_config:
+        lines:
+          - crypto key generate rsa modulus 2048
+      ignore_errors: yes
+
+    - name: Secure VTY lines
+      cisco.ios.ios_config:
+        parents: line vty 0 4
+        lines:
+          - login local
+          - transport input ssh
