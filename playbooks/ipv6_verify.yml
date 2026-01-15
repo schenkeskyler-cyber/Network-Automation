@@ -1,0 +1,16 @@
+---
+- name: Verify IPv6 configuration
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: Check IPv6 interface status
+      ios_command:
+        commands:
+          - show ipv6 interface brief
+      register: ipv6_status
+
+    - name: Save IPv6 verification output
+      copy:
+        content: "{{ ipv6_status.stdout[0] }}"
+        dest: "./outputs/{{ inventory_hostname }}-ipv6-status-{{ lookup('pipe','date +%Y%m%d-%H%M%S') }}.txt"
