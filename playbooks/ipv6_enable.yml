@@ -1,0 +1,11 @@
+---
+- name: Enable IPv6 on Cisco devices
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: Enable IPv6 unicast routing
+      ios_config:
+        lines:
+          - ipv6 unicast-routing
+        match: line
