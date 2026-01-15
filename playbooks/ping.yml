@@ -5,3 +5,4 @@
   tasks:
     - name: Ping devices
       ios_ping:
+        dest: 127.0.0.1
