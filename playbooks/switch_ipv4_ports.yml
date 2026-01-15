@@ -6,17 +6,24 @@
 
   tasks:
 
+    - name: Safety check – ensure mgmt_ip matches ansible_host
+      fail:
+        msg: >
+          Management IP ({{ mgmt_ip }}) does not match ansible_host ({{ ansible_host }}).
+          Playbook stopped to prevent misconfiguration.
+      when: mgmt_ip != ansible_host
+
     - name: Configure management SVI (VLAN 1)
       ios_config:
         parents: interface Vlan1
         lines:
-          - ip address 192.168.1.2 255.255.255.0
+          - ip address {{ mgmt_ip }} 255.255.255.0
           - no shutdown
 
     - name: Configure default gateway
       ios_config:
         lines:
-          - ip default-gateway 192.168.1.1
+          - ip default-gateway {{ mgmt_gw }}
 
     - name: Configure access ports GigabitEthernet1/0/1-28
       ios_config:
@@ -27,3 +34,4 @@
           - switchport access vlan 10
           - spanning-tree portfast
           - no shutdown
+`
