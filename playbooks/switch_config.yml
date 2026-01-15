@@ -17,10 +17,10 @@
     - name: Create VLAN 20
       cisco.ios.ios_config:
         lines:
-          -vlan 20
-          -name STAFF
+          - vlan 20
+          - name STAFF
 
-    - name: Configure access port with security
+    - name: Configure access port Fa0/1 (VLAN 10 + Port Security)
       cisco.ios.ios_config:
         parents: interface FastEthernet0/1
         lines:
@@ -31,7 +31,7 @@
           - switchport port-security violation shutdown
           - no shutdown
 
-    - name: Configure access port Fa0/2 (VLAN 20)
+    - name: Configure access port Fa0/2 (VLAN 20 + Port Security)
       cisco.ios.ios_config:
         parents: interface FastEthernet0/2
         lines:
@@ -50,6 +50,7 @@
           - switchport mode trunk
           - switchport trunk allowed vlan 10,20
           - no shutdown
+
     - name: Set MOTD banner
       cisco.ios.ios_config:
         lines:
