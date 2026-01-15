@@ -1,16 +1,18 @@
+# playbooks/router_enable_test.yml
 ---
-- name: Router enable-mode test (safe)
+- name: Router enable-mode test (forced enable)
   hosts: R1
   gather_facts: no
   connection: network_cli
+  become: true
+  become_method: enable
 
   tasks:
-    - name: Verify enable access by running show hostname
+    - name: Show hostname from running-config
       cisco.ios.ios_command:
         commands:
           - show running-config | section hostname
-      register: hostname_output
+      register: out
 
-    - name: Display hostname section
-      debug:
-        var: hostname_output.stdout_lines
+    - debug:
+        var: out.stdout_lines
