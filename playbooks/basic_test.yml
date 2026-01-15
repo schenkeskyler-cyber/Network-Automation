@@ -1,0 +1,9 @@
+- name: Basic Cisco connectivity test
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: Run show version
+      cisco.ios.ios_command:
+        commands:
+          - show version
