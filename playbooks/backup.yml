@@ -1,7 +1,14 @@
 - name: Backup Cisco device configs
   hosts: all
   gather_facts: no
+
   tasks:
-    - name: Backup running config
+    - name: Backup running configuration
       ios_config:
         backup: yes
+      register: backup_result
+
+    - name: Save backup output locally
+      copy:
+        content: "{{ backup_result.backup_config }}"
+        dest: "./backups/{{ inventory_hostname }}-running-config.txt"
