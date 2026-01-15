@@ -16,5 +16,5 @@
 
     - name: Save backup output locally with timestamp
       copy:
-        content: "{{ backup_result.backup }}"
-        dest: "./backups/{{ inventory_hostname }}-running-config-{{ lookup('pipe', 'date +%Y%m%d-%H%M%S') }}.txt"
+        content: "{{ backup_result.stdout | default('') }}"
+        dest: "./backups/{{ inventory_hostname }}-running-config-{{ lookup('pipe','date +%Y%m%d-%H%M%S') }}.txt"
