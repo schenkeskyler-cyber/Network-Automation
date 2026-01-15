@@ -23,3 +23,24 @@
           - switchport port-security
           - switchport port-security maximum 1
           - switchport port-security violation shutdown
+          - no shutdown
+
+    - name: Configure access port Fa0/2 (VLAN 20)
+      cisco.ios.ios_config:
+        parents: interface FastEthernet0/2
+        lines:
+          - switchport mode access
+          - switchport access vlan 20
+          - switchport port-security
+          - switchport port-security maximum 1
+          - switchport port-security violation shutdown
+          - no shutdown
+
+    - name: Configure trunk port to router
+      cisco.ios.ios_config:
+        parents: interface GigabitEthernet0/1
+        lines:
+          - switchport trunk encapsulation dot1q
+          - switchport mode trunk
+          - switchport trunk allowed vlan 10,20
+          - no shutdown
