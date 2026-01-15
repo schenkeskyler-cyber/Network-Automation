@@ -1,0 +1,10 @@
+---
+- name: Router enable-mode test
+  hosts: R1
+  gather_facts: no
+
+  tasks:
+    - name: Show running config (enable required)
+      cisco.ios.ios_command:
+        commands:
+          - show running-config | section hostname
