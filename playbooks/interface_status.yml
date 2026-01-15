@@ -1,0 +1,16 @@
+---
+- name: Collect interface status from Cisco devices
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: Get interface status
+      ios_command:
+        commands:
+          - show ip interface brief
+      register: iface_status
+
+    - name: Save interface status locally
+      copy:
+        content: "{{ iface_status.stdout[0] }}"
+        dest: "./outputs/{{ inventory_hostname }}-interfaces-{{ lookup('pipe','date +%Y%m%d-%H%M%S') }}.txt"
