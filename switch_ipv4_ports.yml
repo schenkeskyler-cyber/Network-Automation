@@ -1,0 +1,29 @@
+---
+- name: Configure IPv4 and access ports on Cisco switches
+  hosts: switches
+  gather_facts: no
+  connection: network_cli
+
+  tasks:
+
+    - name: Configure management SVI (VLAN 1)
+      ios_config:
+        parents: interface Vlan1
+        lines:
+          - ip address 192.168.1.2 255.255.255.0
+          - no shutdown
+
+    - name: Configure default gateway
+      ios_config:
+        lines:
+          - ip default-gateway 192.168.1.1
+
+    - name: Configure access ports GigabitEthernet1/0/1-28
+      ios_config:
+        parents: interface range GigabitEthernet1/0/1 - 28
+        lines:
+          - description USER_ACCESS_PORT
+          - switchport mode access
+          - switchport access vlan 10
+          - spanning-tree portfast
+          - no shutdown
