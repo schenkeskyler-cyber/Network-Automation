@@ -1,4 +1,5 @@
-- name: Router Configuration
+nano playbooks/switch_config.ym- name: Router Configuration
+  - name: Router Configuration
   hosts: routers
   gather_facts: no
 
@@ -8,10 +9,23 @@
         lines:
           - hostname R1
 
-    - name: Configure router interface
+    - name: Enable physical interface (no IP here)
       cisco.ios.ios_config:
         parents: interface GigabitEthernet0/0
         lines:
           - description Link to Switch
-          - ip address 192.168.10.1 255.255.255.0
           - no shutdown
+
+    - name: Configure VLAN 10 subinterface
+      cisco.ios.ios_config:
+        parents: interface GigabitEthernet0/0.10
+        lines:
+          - encapsulation dot1Q 10
+          - ip address 192.168.10.1 255.255.255.0
+
+    - name: Configure VLAN 20 subinterface
+      cisco.ios.ios_config:
+        parents: interface GigabitEthernet0/0.20
+        lines:
+          - encapsulation dot1Q 20
+          - ip address 192.168.20.1 255.255.255.0
