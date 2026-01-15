@@ -1,14 +1,20 @@
+---
 - name: Backup Cisco device configs
   hosts: all
   gather_facts: no
 
   tasks:
+    - name: Ensure backups folder exists
+      file:
+        path: ./backups
+        state: directory
+
     - name: Backup running configuration
       ios_config:
         backup: yes
       register: backup_result
 
-    - name: Save backup output locally
+    - name: Save backup output locally with timestamp
       copy:
         content: "{{ backup_result.backup }}"
-        dest: "./backups/{{ inventory_hostname }}-running-config.txt"
+        dest: "./backups/{{ inventory_hostname }}-running-config-{{ lookup('pipe', 'date +%Y%m%d-%H%M%S') }}.txt"
