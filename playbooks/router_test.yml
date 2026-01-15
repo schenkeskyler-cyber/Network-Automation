@@ -1,0 +1,11 @@
+---
+- name: Router-only test (no enable)
+  hosts: R1
+  gather_facts: no
+  connection: network_cli
+
+  tasks:
+    - name: Show clock
+      cisco.ios.ios_command:
+        commands:
+          - show clock
