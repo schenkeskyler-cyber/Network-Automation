@@ -1,0 +1,14 @@
+---
+- name: Configure interface on routers
+  hosts: routers
+  gather_facts: no
+  connection: network_cli
+
+  tasks:
+    - name: Configure interface GigabitEthernet0/1
+      ios_config:
+        lines:
+          - description Configured by Ansible
+          - ip address 192.168.100.1 255.255.255.0
+          - no shutdown
+        parents: interface GigabitEthernet0/1
