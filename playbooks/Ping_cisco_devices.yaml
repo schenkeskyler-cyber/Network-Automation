@@ -1,0 +1,10 @@
+---
+- name: Test connectivity to Cisco devices
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: Ping device
+      ios_command:
+        commands:
+          - show version
