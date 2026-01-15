@@ -10,5 +10,5 @@
 
     - name: Save backup output locally
       copy:
-        content: "{{ backup_result.backup_config }}"
+        content: "{{ backup_result.backup }}"
         dest: "./backups/{{ inventory_hostname }}-running-config.txt"
