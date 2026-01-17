@@ -26,7 +26,7 @@
           - version 2
           - no auto-summary
           - network 192.168.1.0
-          - network 192.168.2.0
+          - network 192.168.10.0
 
     - name: Configure RIP on R2
       when: inventory_hostname == "R2"
@@ -36,7 +36,7 @@
           - version 2
           - no auto-summary
           - network 192.168.1.0
-          - network 192.168.2.0
+          - network 192.168.20.0
           
     - name: Configure IPv6 static route on R1
       when: inventory_hostname == "R1"
