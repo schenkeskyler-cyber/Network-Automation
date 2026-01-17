@@ -4,12 +4,13 @@
   gather_facts: no
 
   tasks:
-    - name: Configure hostname
+
+    - name: Configure hostname dynamically
       cisco.ios.ios_config:
         lines:
-          - hostname R1
+          - "hostname {{ inventory_hostname }}"
 
-    - name: Enable physical interface
+    - name: Enable physical interface GigabitEthernet0/0/0
       cisco.ios.ios_config:
         parents: interface GigabitEthernet0/0/0
         lines:
@@ -20,3 +21,4 @@
       cisco.ios.ios_config:
         lines:
           - banner motd ^UNAUTHORISED ACCESS ONLY^
+
