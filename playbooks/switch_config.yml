@@ -11,19 +11,7 @@
         lines:
           - hostname S1
 
-    - name: Create VLAN 10
-      cisco.ios.ios_config:
-        lines:
-          - vlan 10
-          - name USERS
-
-    - name: Create VLAN 20
-      cisco.ios.ios_config:
-        lines:
-          - vlan 20
-          - name STAFF
-
-    - name: Configure access port Gi1/0/1 (VLAN 10 + Port Security)
+    - name: Configure access port Gi1/0/1
       cisco.ios.ios_config:
         parents: interface GigabitEthernet1/0/1
         lines:
@@ -32,25 +20,6 @@
           - switchport port-security
           - switchport port-security maximum 1
           - switchport port-security violation shutdown
-          - no shutdown
-
-    - name: Configure access port Gi1/0/2 (VLAN 20 + Port Security)
-      cisco.ios.ios_config:
-        parents: interface GigabitEthernet1/0/2
-        lines:
-          - switchport mode access
-          - switchport access vlan 20
-          - switchport port-security
-          - switchport port-security maximum 1
-          - switchport port-security violation shutdown
-          - no shutdown
-
-    - name: Configure trunk port to router
-      cisco.ios.ios_config:
-        parents: interface GigabitEthernet1/0/24
-        lines:
-          - switchport mode trunk
-          - switchport trunk allowed vlan 10,20
           - no shutdown
 
     - name: Set MOTD banner
