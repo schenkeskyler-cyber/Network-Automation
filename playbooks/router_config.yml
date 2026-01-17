@@ -25,7 +25,7 @@
           - version 2
           - no auto-summary
           - network 192.168.1.0
-          - network 10.0.0.0
+          - network 192.168.2.0
 
     - name: Configure RIP on R2
       when: inventory_hostname == "R2"
@@ -34,8 +34,8 @@
           - router rip
           - version 2
           - no auto-summary
+          - network 192.168.1.0
           - network 192.168.2.0
-          - network 10.0.0.0
 
     - name: Set MOTD banner
       cisco.ios.ios_config:
