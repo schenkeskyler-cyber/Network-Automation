@@ -6,17 +6,18 @@
     ansible_command_timeout: 120
 
   tasks:
-    - name: Configure hostname
+
+    - name: Configure hostname dynamically
       cisco.ios.ios_config:
         lines:
-          - hostname S1
+          - "hostname {{ inventory_hostname }}"
 
-    - name: Configure access port Gi1/0/1
+    - name: Configure access port dynamically
       cisco.ios.ios_config:
-        parents: interface GigabitEthernet1/0/1
+        parents: interface {{ access_port }}
         lines:
           - switchport mode access
-          - switchport access vlan 10
+          - switchport access vlan {{ vlan }}
           - switchport port-security
           - switchport port-security maximum 1
           - switchport port-security violation shutdown
