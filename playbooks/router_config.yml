@@ -10,11 +10,12 @@
         lines:
           - "hostname {{ inventory_hostname }}"
 
-    - name: Enable physical interface GigabitEthernet0/0/0
+    - name: Configure IPv4 and IPv6 on physical interface dynamically
       cisco.ios.ios_config:
         parents: interface GigabitEthernet0/0/0
         lines:
-          - description Link to Switch
+          - "ip address {{ ipv4_address }} {{ ipv4_mask }}"
+          - "ipv6 address {{ ipv6_address }}"
           - no shutdown
 
     - name: Configure RIP on R1
