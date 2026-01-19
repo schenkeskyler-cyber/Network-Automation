@@ -16,6 +16,8 @@ Developed Ansible playbooks and inventory files, ensuring automation tasks worke
 
 Leo Richards – DevOps & Documentation Lead
 Managed the GitHub repository, version control, testing, documentation, and assisted with troubleshooting.
+
+
 Although roles were defined, all team members collaborated throughout the project and supported each other where required.
 
 ---
