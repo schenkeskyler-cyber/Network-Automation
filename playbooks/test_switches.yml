@@ -1,0 +1,29 @@
+---
+- name: Validate switch configuration
+  hosts: switches
+  gather_facts: no
+
+  tasks:
+    - name: Check default gateway
+      cisco.ios.ios_command:
+        commands:
+          - show run | include default-gateway
+      register: gw_output
+
+    - name: Assert default gateway is configured
+      assert:
+        that:
+          - "'ip default-gateway' in gw_output.stdout[0]"
+
+    - name: Check access port configuration
+      cisco.ios.ios_command:
+        commands:
+          - show run interface {{ access_port }}
+      register: int_output
+
+    - name: Assert access port is configured as access port
+      assert:
+        that:
+          - "'switchport mode access' in int_output.stdout[0]"
+
+
