@@ -8,13 +8,14 @@
 ---
 
 ## Team Members and Roles
-- **Skyler Schenke** – Documentation and GitHub Lead  
-  - Responsible for repository management, version control, and project documentation.
-- **Rehan** – Automation Engineer  
-  - Responsible for developing Ansible playbooks, inventory files, and implementing SSH-based automation.
-- **Leo** – Testing and Validation Engineer  
-  - Responsible for testing automation outcomes and validating configurations on network devices.
+Rehan Joseph – Network Engineer
+Responsible for designing the network topology, configuring physical routers and switches, and verifying baseline settings.
 
+Skyler Schenke – Automation Engineer
+Developed Ansible playbooks and inventory files, ensuring automation tasks worked correctly on physical devices.
+
+Leo Richards – DevOps & Documentation Lead
+Managed the GitHub repository, version control, testing, documentation, and assisted with troubleshooting.
 Although roles were defined, all team members collaborated throughout the project and supported each other where required.
 
 ---
