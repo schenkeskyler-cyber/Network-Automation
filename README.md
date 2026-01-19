@@ -51,3 +51,12 @@ The following configurations are automated:
 ---
 
 ## Repository Structure
+Physical devices were configured for SSH access to allow Ansible to connect securely. The management PC ran Ansible, using an inventory file containing all device IPs.
+
+We developed a series of Ansible playbooks:
+
+Main playbooks: One for all router configurations, one for all switch configurations
+
+Additional smaller playbooks: Task-specific updates as needed
+
+Router playbooks configured IPs, routing, and static routes; switch playbooks handled VLANs, port assignments, and port security. All configurations were applied via Cisco-specific Ansible modules. Verification was done using IOS commands (show run, show ip interface brief, show ip route) to ensure accuracy and consistency.
