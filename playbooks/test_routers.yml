@@ -1,0 +1,17 @@
+---
+- name: Validate router configuration
+  hosts: routers
+  gather_facts: no
+
+  tasks:
+    - name: Check IP interfaces
+      cisco.ios.ios_command:
+        commands:
+          - show ip interface brief
+      register: ip_output
+
+    - name: Assert router has LAN IP
+      assert:
+        that:
+          - ip_output.stdout[0] is search("192.168.")
+
