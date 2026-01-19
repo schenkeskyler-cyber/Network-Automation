@@ -1,33 +1,30 @@
+---
 - name: Switch Configuration
   hosts: switches
   gather_facts: no
 
-  vars:
-    ansible_command_timeout: 120
-
   tasks:
 
-    - name: Configure hostname dynamically
+    - name: Set hostname
       cisco.ios.ios_config:
         lines:
           - "hostname {{ inventory_hostname }}"
-    - name: Configure default gateway dynamically
+
+    - name: Configure default gateway
       cisco.ios.ios_config:
         lines:
           - "ip default-gateway {{ default_gateway }}"
 
-    - name: Configure access port dynamically
+    - name: Configure access port (VLAN 1)
       cisco.ios.ios_config:
-        parents: interface {{ access_port }}
+        parents:
+          - "interface {{ access_port }}"
         lines:
           - switchport mode access
-          - switchport access vlan {{ vlan }}
-          - switchport port-security
-          - switchport port-security maximum 1
-          - switchport port-security violation shutdown
+          - switchport access vlan 1
           - no shutdown
 
-    - name: Set MOTD banner
+    - name: Configure MOTD banner
       cisco.ios.ios_config:
         lines:
           - banner motd ^UNAUTHORISED ACCESS ONLY^
