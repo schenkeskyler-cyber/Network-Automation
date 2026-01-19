@@ -8,5 +8,5 @@ plink -ssh admin@192.168.1.1 -P 22 -legacy-dh -hostkey *
 
 git clone https://github.com/schenkeskyler-cyber/Network-Automation.git
 
-ansible-playbook -i inventory/hosts.yml playbooks/backup.yml 
+ansible-playbook -i inventory/hosts.yml playbooks/backup.yml -k
 
