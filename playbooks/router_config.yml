@@ -5,21 +5,22 @@
 
   tasks:
 
-    - name: Configure hostname dynamically
+    - name: Set hostname from inventory
       cisco.ios.ios_config:
         lines:
           - "hostname {{ inventory_hostname }}"
 
-    - name: Configure all router interfaces dynamically
+    - name: Configure router interfaces from inventory
       cisco.ios.ios_config:
-        parents: "interface {{ item.name }}"
+        parents:
+          - "interface {{ item.name }}"
         lines:
           - "ip address {{ item.ipv4 }} {{ item.mask }}"
           - "ipv6 address {{ item.ipv6 }}"
           - "no shutdown"
       loop: "{{ hostvars[inventory_hostname].interfaces }}"
 
-    - name: Configure RIP on R1
+    - name: Enable RIP v2 on R1
       when: inventory_hostname == "R1"
       cisco.ios.ios_config:
         lines:
@@ -27,17 +28,17 @@
           - version 2
           - no auto-summary
           - network 192.168.1.0
-          - network 192.168.10.0
+          - network 10.0.0.0
 
-    - name: Configure RIP on R2
+    - name: Enable RIP v2 on R2
       when: inventory_hostname == "R2"
       cisco.ios.ios_config:
         lines:
           - router rip
           - version 2
           - no auto-summary
-          - network 192.168.1.0
-          - network 192.168.20.0
+          - network 192.168.2.0
+          - network 10.0.0.0
 
     - name: Configure IPv6 static route on R1
       when: inventory_hostname == "R1"
@@ -51,7 +52,7 @@
         lines:
           - ipv6 route 2001:DB8:10::/64 2001:DB8:1::1
 
-    - name: Set MOTD banner
+    - name: Configure MOTD banner
       cisco.ios.ios_config:
         lines:
           - banner motd ^UNAUTHORISED ACCESS ONLY^
