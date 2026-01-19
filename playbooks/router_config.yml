@@ -10,14 +10,14 @@
         lines:
           - "hostname {{ inventory_hostname }}"
 
-   - name: Configure all router interfaces dynamically
+    - name: Configure all router interfaces dynamically
       cisco.ios.ios_config:
-        parents: interface {{ item.name }}
+        parents: "interface {{ item.name }}"
         lines:
           - "ip address {{ item.ipv4 }} {{ item.mask }}"
           - "ipv6 address {{ item.ipv6 }}"
-          - no shutdown
-      loop: "{{ interfaces }}"
+          - "no shutdown"
+      loop: "{{ hostvars[inventory_hostname].interfaces }}"
 
     - name: Configure RIP on R1
       when: inventory_hostname == "R1"
@@ -38,20 +38,18 @@
           - no auto-summary
           - network 192.168.1.0
           - network 192.168.20.0
-          
+
     - name: Configure IPv6 static route on R1
       when: inventory_hostname == "R1"
       cisco.ios.ios_config:
-      lines:
-        - ipv6 route 2001:DB8:20::/64 2001:DB8:1::2
-      
+        lines:
+          - ipv6 route 2001:DB8:20::/64 2001:DB8:1::2
 
     - name: Configure IPv6 static route on R2
       when: inventory_hostname == "R2"
       cisco.ios.ios_config:
-      lines:
-         - ipv6 route 2001:DB8:10::/64 2001:DB8:1::1
-      
+        lines:
+          - ipv6 route 2001:DB8:10::/64 2001:DB8:1::1
 
     - name: Set MOTD banner
       cisco.ios.ios_config:
