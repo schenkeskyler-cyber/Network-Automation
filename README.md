@@ -32,7 +32,7 @@ A virtual Cisco router was used to design, implement, and test the automation so
 
 ## Technologies and Tools Used
 - Ansible  
-- Cisco IOS (Virtual Router – e.g. CSR1000v)  
+- Cisco IOS 
 - SSH  
 - GitHub (Version Control and Collaboration)  
 - Discord (Team Communication)
